@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: java-postgresql-skeleton
+  
+  datasource:
+    url: jdbc:postgresql://db:5432/app_db
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  sql:
+    init:
+      mode: always
+      platform: postgresql
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.example.app: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

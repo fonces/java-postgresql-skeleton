@@ -1,0 +1,89 @@
+{
+  "name": "Java PostgreSQL Development",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/java-postgresql-skeleton",
+
+  // Configure tool-specific properties
+  "customizations": {
+    "vscode": {
+      // Set *default* container specific settings.json values on container create
+      "settings": {
+        "java.jdt.ls.java.home": "/usr/local/openjdk-21",
+        "java.configuration.detectJdksAtStart": false,
+        "java.configuration.runtimes": [
+          {
+            "name": "JavaSE-21",
+            "path": "/usr/local/openjdk-21"
+          }
+        ],
+        "java.compile.nullAnalysis.mode": "automatic",
+        "maven.executable.path": "/usr/local/bin/mvn",
+        
+        // Database Client Settings
+        "database-client.defaultDatabase": "PostgreSQL",
+        "database-client.connectionTimeout": 10000,
+        "database-client.showEstimate": true
+      },
+
+      // Add the IDs of extensions you want installed when the container is created
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-spring-initializr",
+        "vscjava.vscode-spring-boot-dashboard",
+        "pivotal.vscode-spring-boot",
+        "redhat.java",
+        "vscjava.vscode-java-debug",
+        "vscjava.vscode-java-test",
+        "vscjava.vscode-maven",
+        "ms-vscode.vscode-json",
+        "ms-vscode-remote.remote-containers",
+        "cweijan.vscode-postgresql-client2",
+        "humao.rest-client"
+      ]
+    }
+  },
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally
+  "forwardPorts": [8080, 5432],
+
+  // Configure port attributes
+  "portsAttributes": {
+    "8080": {
+      "label": "Spring Boot Application",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL Database",
+      "onAutoForward": "notify",
+      "requireLocalPort": false
+    }
+  },
+
+  // Use 'postCreateCommand' to run commands after the container is created
+  "postCreateCommand": "sudo chown -R vscode:vscode /workspaces && cd /workspaces/java-postgresql-skeleton && mvn dependency:resolve",
+
+  // Configure container user
+  "remoteUser": "vscode",
+
+  // Set environment variables
+  "containerEnv": {
+    "JAVA_HOME": "/usr/local/openjdk-21",
+    "MAVEN_HOME": "/usr/share/maven",
+    "SPRING_DATASOURCE_URL": "jdbc:postgresql://db:5432/app_db",
+    "SPRING_DATASOURCE_USERNAME": "postgres",
+    "SPRING_DATASOURCE_PASSWORD": "password",
+    "PGPASSWORD": "password",
+    "PGUSER": "postgres",
+    "PGDATABASE": "app_db",
+    "PGHOST": "db",
+    "PGPORT": "5432"
+  },
+
+  // Add capability for ptrace-based debuggers like C++, Go, and Rust
+  "capAdd": ["SYS_PTRACE"],
+  "securityOpt": ["seccomp=unconfined"],
+
+  // Keep container running even if VS Code is closed
+  "shutdownAction": "none"
+}

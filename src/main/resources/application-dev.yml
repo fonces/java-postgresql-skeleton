@@ -1,0 +1,25 @@
+spring:
+  # 開発モード用の設定
+  jpa:
+    hibernate:
+      ddl-auto: update  # 開発時はテーブル構造を更新
+    show-sql: true
+    properties:
+      hibernate:
+        '[format_sql]': true
+        jdbc:
+          lob:
+            '[non_contextual_creation]': true
+
+# ログレベル設定（デバッグよりは軽めに）
+logging:
+  level:
+    '[com.example]': DEBUG
+    '[org.springframework.web]': INFO
+    '[org.hibernate.SQL]': INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# サーバー設定
+server:
+  port: 8080
