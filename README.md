@@ -30,7 +30,7 @@ VSCodeのDev Containerを用いたSpring BootとPostgreSQLのコンテナ環境
 ### Spring Bootアプリケーション
 - OpenJDK 21
 - Maven
-- Spring Boot 4.x
+- Spring Boot 3.x
 - Spring Data JPA
 
 ### PostgreSQLデータベース
@@ -43,13 +43,62 @@ VSCodeのDev Containerを用いたSpring BootとPostgreSQLのコンテナ環境
 
 ### アプリケーションの起動
 
+#### 1. 通常モード
 ```bash
 ./mvnw spring-boot:run
 ```
 
+#### 2. VSCodeデバッガーを使用したデバッグ
+1. VSCodeの「実行とデバッグ」タブ（Ctrl+Shift+D）を開く
+2. 以下の設定から選択して実行：
+   - **JavaPostgresqlSkeletonApplication**: 通常モード
+   - **JavaPostgresqlSkeletonApplication (Dev Mode)**: 開発モード
+   - **JavaPostgresqlSkeletonApplication (Debug Mode)**: フルデバッグモード
+
+#### 3. コマンドラインでのデバッグモード
+```bash
+# 開発プロファイルで起動
+./mvnw spring-boot:run -Dspring.profiles.active=dev
+
+# デバッグプロファイルで起動（詳細ログ有り）
+./mvnw spring-boot:run -Dspring.profiles.active=debug
+
+# JVMデバッガー接続可能で起動
+./mvnw spring-boot:run -Dagentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+```
+
+#### 4. プロファイル別の特徴
+
+**デフォルト（本番想定）:**
+- 最小限のログ出力
+- パフォーマンス重視の設定
+
+**Dev Mode（開発用）:**
+- アプリケーションログをDEBUGレベルで出力
+- SQLログを適度に表示
+- テーブル構造の自動更新
+
+**Debug Mode（デバッグ用）:**
+- 全ての詳細ログを出力（SQL、Hibernate、Spring Web等）
+- テーブルを毎回再作成
+- Spring Boot Actuatorエンドポイント有効化
+- エラー時のスタックトレース表示
+
+### デバッグ用エンドポイント（Debug Modeのみ）
+
+Debug Modeで起動時に以下のエンドポイントが利用可能：
+
+- `http://localhost:8080/actuator/health` - アプリケーションヘルス情報
+- `http://localhost:8080/actuator/env` - 環境変数とプロパティ情報
+- `http://localhost:8080/actuator/loggers` - ログレベルの確認・変更
+- `http://localhost:8080/actuator/mappings` - URLマッピング情報
+- `http://localhost:8080/actuator/beans` - Spring Beanの情報
+
 ### データベース接続
 
-アプリケーション内でのPostgreSQLへの接続設定は `application.yml` または `application.properties` で確認できます。
+アプリケーション内でのPostgreSQLへの接続設定は `application.yml` または `application.properties` で確認できます。  
+テーブル構成は[DATABASE.md](DATABASE.md)を参照
+
 
 ### テストの実行
 

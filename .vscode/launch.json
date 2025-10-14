@@ -1,0 +1,56 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Current File",
+      "request": "launch",
+      "mainClass": "${file}"
+    },
+    {
+      "type": "java",
+      "name": "JavaPostgresqlSkeletonApplication",
+      "request": "launch",
+      "mainClass": "com.example.app.JavaPostgresqlSkeletonApplication",
+      "projectName": "java-postgresql-skeleton"
+    },
+    {
+      "type": "java",
+      "name": "JavaPostgresqlSkeletonApplication (Debug Mode)",
+      "request": "launch",
+      "mainClass": "com.example.app.JavaPostgresqlSkeletonApplication",
+      "projectName": "java-postgresql-skeleton",
+      "args": [],
+      "vmArgs": [
+        "-Dspring.profiles.active=debug",
+        "-Dlogging.level.com.example=DEBUG",
+        "-Dlogging.level.org.springframework.web=DEBUG",
+        "-Dlogging.level.org.hibernate.SQL=DEBUG",
+        "-Dlogging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE"
+      ],
+      "env": {
+        "SPRING_PROFILES_ACTIVE": "debug"
+      },
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "java",
+      "name": "JavaPostgresqlSkeletonApplication (Dev Mode)",
+      "request": "launch",
+      "mainClass": "com.example.app.JavaPostgresqlSkeletonApplication",
+      "projectName": "java-postgresql-skeleton",
+      "args": [],
+      "vmArgs": [
+        "-Dspring.profiles.active=dev",
+        "-Dlogging.level.com.example=DEBUG"
+      ],
+      "env": {
+        "SPRING_PROFILES_ACTIVE": "dev"
+      },
+      "console": "integratedTerminal"
+    }
+  ]
+}

@@ -323,8 +323,8 @@ code .
    ```
 
 2. **ブラウザでアクセス確認**
-   - `http://localhost:8080/api/users` にアクセス
-   - JSON形式でユーザー一覧が表示されることを確認
+   - `http://localhost:8080/` にアクセス
+   - `Hello World!` が表示されることを確認
 
 3. **PostgreSQLの接続確認**
    ```bash

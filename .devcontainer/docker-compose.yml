@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    working_dir: /workspace
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally
+    # (Adding the "ports" property to this file will not forward from a Codespace)
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/app_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+      - SPRING_JPA_SHOW_SQL=true
+    # Keep the container running
+    command: sleep infinity
+    networks:
+      - app-network
+
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    environment:
+      - POSTGRES_DB=app_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_INITDB_ARGS=--auth-local=trust --auth-host=md5
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    # PostgreSQL設定の最適化
+    command: >
+      postgres
+      -c listen_addresses='*'
+      -c max_connections=100
+      -c shared_buffers=128MB
+      -c effective_cache_size=256MB
+      -c maintenance_work_mem=64MB
+      -c checkpoint_completion_target=0.9
+      -c wal_buffers=16MB
+      -c default_statistics_target=100
+
+volumes:
+  postgres-data:
+
+networks:
+  app-network:
+    driver: bridge
