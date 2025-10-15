@@ -25,6 +25,13 @@ spring:
       mode: always
       platform: postgresql
 
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+    prefix: classpath:/templates/
+    suffix: .html
+
 server:
   port: 8080
 

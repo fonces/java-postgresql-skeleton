@@ -34,6 +34,8 @@ VSCodeのDev Containerを用いたSpring BootとPostgreSQLのコンテナ環境
 - Maven
 - Spring Boot 3.x
 - Spring Data JPA
+- Spring Boot Starter Thymeleaf
+- Spring Boot Starter Validation
 
 ### PostgreSQLデータベース
 - PostgreSQL 15
@@ -101,6 +103,37 @@ Debug Modeで起動時に以下のエンドポイントが利用可能：
 アプリケーション内でのPostgreSQLへの接続設定は `application.yml` または `application.properties` で確認できます。  
 テーブル構成は[DATABASE.md](DATABASE.md)を参照
 
+### Thymeleafテンプレートエンジン
+
+#### テンプレートファイルの配置
+- テンプレートファイル: `src/main/resources/templates/`
+- 静的リソース: `src/main/resources/static/`
+- ファイル形式: `.html`
+
+#### 基本的な使い方
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}">Default Title</title>
+</head>
+<body>
+    <h1 th:text="${message}">Default Message</h1>
+    <ul>
+        <li th:each="user : ${users}" th:text="${user.username}">Default Username</li>
+    </ul>
+</body>
+</html>
+```
+
+#### Thymeleaf設定（application.yml）
+- キャッシュ無効化（開発時）
+- UTF-8エンコーディング
+- HTMLモード設定
+- テンプレート接頭辞・接尾辞設定
+
+#### アクセス方法
+- **Webページ**: `http://localhost:8080/` - Thymeleafテンプレートでユーザー一覧表示
 
 ### テストの実行
 
