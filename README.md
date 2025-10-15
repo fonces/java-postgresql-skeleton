@@ -43,6 +43,19 @@ VSCodeのDev Containerを用いたSpring BootとPostgreSQLのコンテナ環境
 - ユーザー: `postgres`
 - パスワード: `password`
 
+### pgAdmin (データベース管理ツール)
+- pgAdmin 4 Web Interface
+- アクセス: `http://localhost:5050`
+- ログイン情報:
+  - Email: `admin@example.com`
+  - パスワード: `admin`
+- PostgreSQL接続情報:
+  - ホスト名: `db`
+  - ポート: `5432`
+  - データベース: `app_db`
+  - ユーザー名: `postgres`
+  - パスワード: `password`
+
 ## 使用方法
 
 ### アプリケーションの起動
@@ -145,12 +158,14 @@ Debug Modeで起動時に以下のエンドポイントが利用可能：
 
 - Spring Boot アプリケーション: `http://localhost:8080`
 - PostgreSQL: `localhost:5432`
+- pgAdmin (データベース管理): `http://localhost:5050`
 
 ## 開発のヒント
 
 - WSL2上のDockerでコンテナが実行されるため、パフォーマンスが最適化されています
 - Dev Container内では、すべての依存関係が自動的にインストールされます
 - PostgreSQLは別コンテナで実行され、アプリケーションコンテナから接続可能です
+- pgAdminでデータベースをGUIで管理・操作可能です
 - VSCodeの拡張機能やデバッグ設定も自動的に設定されます
 - WSL2のファイルシステム（`/home/`）にプロジェクトを配置することでパフォーマンスが向上します
 

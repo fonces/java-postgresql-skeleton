@@ -45,7 +45,7 @@
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally
-  "forwardPorts": [8080, 5432],
+  "forwardPorts": [8080, 5432, 5050],
 
   // Configure port attributes
   "portsAttributes": {
@@ -56,6 +56,11 @@
     "5432": {
       "label": "PostgreSQL Database",
       "onAutoForward": "notify",
+      "requireLocalPort": false
+    },
+    "5050": {
+      "label": "pgAdmin Web Interface",
+      "onAutoForward": "openPreview",
       "requireLocalPort": false
     }
   },
